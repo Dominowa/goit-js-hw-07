@@ -1,5 +1,4 @@
-import { galleryItems } from "./gallery-items.js";
-[
+const galleryItems = [
   {
     smallImage: "small-image-1.jpg",
     largeImage: "large-image-1.jpg",
