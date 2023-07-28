@@ -1,7 +1,9 @@
 const galleryItems = [
   {
-    smallImage: "small-image-1.jpg",
-    largeImage: "large-image-1.jpg",
+    smallImage:
+      "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg",
+    largeImage:
+      "https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg",
     alt: "Image description 1",
   },
 ];
