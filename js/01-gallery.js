@@ -1,7 +1,7 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-const ingredients = [
+const galleryItems = [
   {
     smallImage: "small-image-1.jpg",
     largeImage: "large-image-1.jpg",
@@ -11,40 +11,47 @@ const ingredients = [
 
 const ingredientsList = document.getElementById("ingredients");
 
-function createIngredientsList() {
-  const fragment = document.createDocumentFragment();
+function createGalleryItem(item) {
+  const listItem = document.createElement("li");
+  const link = document.createElement("a");
+  const image = document.createElement("img");
 
-  ingredients.forEach((ingredient) => {
-    const listItem = document.createElement("li");
-    const link = document.createElement("a");
-    const image = document.createElement("img");
+  listItem.classList.add("gallery__item");
+  link.classList.add("gallery__link");
+  image.classList.add("gallery__image");
 
-    listItem.classList.add("gallery__item");
-    link.classList.add("gallery__link");
-    image.classList.add("gallery__image");
+  link.href = item.largeImage;
+  image.src = item.smallImage;
+  image.alt = item.alt;
+  image.dataset.source = item.largeImage;
 
-    link.href = ingredient.largeImage;
-    image.src = ingredient.smallImage;
-    image.alt = ingredient.alt;
-    image.dataset.source = ingredient.largeImage;
-
-    link.appendChild(image);
-    listItem.appendChild(link);
-    fragment.appendChild(listItem);
-  });
-
-  ingredientsList.appendChild(fragment);
+  link.appendChild(image);
+  listItem.appendChild(link);
+  return listItem;
 }
 
-createIngredientsList();
-
-ingredientsList.addEventListener("click", (event) => {
+function openModal(event) {
   event.preventDefault();
   if (event.target.tagName === "IMG") {
     const source = event.target.dataset.source;
     const instance = basicLightbox.create(`<img src="${source}">`);
     instance.show();
   }
+}
+
+ingredientsList.addEventListener("click", openModal);
+
+document.addEventListener("keydown", (event) => {
+  const instance = basicLightbox.instance();
+  if (event.key === "Escape" && instance.visible()) {
+    instance.close();
+  }
 });
 
-console.log(galleryItems);
+const galleryFragment = document.createDocumentFragment();
+galleryItems.forEach((item) => {
+  const galleryItem = createGalleryItem(item);
+  galleryFragment.appendChild(galleryItem);
+});
+
+ingredientsList.appendChild(galleryFragment);
